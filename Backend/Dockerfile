@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy requirements file to the container
 COPY requirements.txt .
-COPY run.py .
+COPY main.py .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the application using uvicorn
-CMD ["python3", "run.py"]
+CMD ["python3", "main.py"]

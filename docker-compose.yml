@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  frontend:
+    container_name: frontend
+    image: frontend 
+    build: ./frontend 
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    image: backend
+    build: ./Backend
+    volumes:
+      - ./Backend/:/app/
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+    environment:
+       - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+    depends_on:
+       - db
+
+  db:
+    container_name: dbb
+    image: postgres:12
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    command: -p 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+    pgdata:

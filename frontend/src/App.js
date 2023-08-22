@@ -1,35 +1,52 @@
-import React from 'react';
-import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
-import {useParams} from 'react-router-dom';
+
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+
 import About from './components/AboutPage';
-export default function App() {
+import Home from './components/HomePage';
+import Deneme from './components/Deneme';
+import Login from './components/Login';
+
+
+function App() {
+ 
   return (
     <Router>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+            <ul class="navbar-nav">
+
+              <li class="nav-item">
+                <Link to="/">Home</Link>
+              </li>
+              <li class="nav-item">
+                <Link to="/about">About</Link>
+              </li>
+           
+           
+              <li class="nav-item">
+                <Link to="/does-not-exist">Page Not Found</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              {/* 👇️ link to dynamic path */}
-              <Link to="/users/4200">Users</Link>
-            </li>
-            <li>
-              {/* 👇️ link to catch all route */}
-              <Link to="/does-not-exist">Catch all route</Link>
-            </li>
-          </ul>
-        </nav>
 
         {/* 👇️ Wrap your Route components in a Routes component */}
         <Routes>
           <Route path="/about" element={<About />} />
+          <Route path="/deneme" element={<Deneme />} />
+          <Route path="/login" element={<Login />} />
           {/* 👇️ handle dynamic path */}
-          <Route path="/users/:userId" element={<Users />} />
+        
           <Route path="/" element={<Home />} />
           {/* 👇️ only match this when no other routes match */}
           <Route
@@ -37,23 +54,20 @@ export default function App() {
             element={
               <div>
                 <h2>404 Page not found etc</h2>
+                <br></br>
+
               </div>
             }
           />
         </Routes>
       </div>
     </Router>
+
+
+
   );
 }
 
-function Home() {
-  return <h2>Home</h2>;
-}
 
 
-
-function Users() {
-  const params = useParams();
-
-  return <h2>Users: {params.userId}</h2>;
-}
+export default App;

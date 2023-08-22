@@ -1,10 +1,14 @@
-from fastapi import APIRouter,Depends, Request,HTTPException
+from fastapi import APIRouter,Depends, Request, HTTPException
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 items_router = APIRouter(responses={404: {"description": "Not found"}})
 from app.models import SessionLocal,User,Course,Enrollment
 from app.schemas import User,Student,StudentCreate,Course,CourseCreate,Enrollment,EnrollmentCreate
-from app.crud import create_user,get_user,get_users,update_user,delete_user,create_student,get_student,get_students,update_student,delete_student,create_course,get_course,get_courses,update_course,delete_course,create_enrollment,get_enrollment,get_enrollments,update_enrollment,delete_enrollment
+from app.Controller import create_user,get_user,get_users,update_user,delete_user,create_student,get_student,get_students,update_student,delete_student,create_course,get_course,get_courses,update_course,delete_course,create_enrollment,get_enrollment,get_enrollments,update_enrollment,delete_enrollment,get_user_by_id,get_user_by_username
 # Dependency
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def get_db():
     db = SessionLocal()
@@ -13,6 +17,15 @@ def get_db():
     finally:
         db.close()
 
+
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    return token
+
+def is_admin(user: User = Depends(get_current_user),db: Session = Depends(get_db)):
+    user = get_user_by_username(db, user.username)
+    if user.admin != 1:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    return user
 
 
 @items_router.get("/health",description="servisin çalışıp çalışmadığını kontrol eden router")

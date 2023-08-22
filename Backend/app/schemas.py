@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field
 from datetime import date
 from typing import List
+from typing import Optional
+
 
 class StudentBase(BaseModel):
     FirstName: str
@@ -52,7 +54,19 @@ class UserCreate(UserBase):
 class User(UserBase):
     id:int
     admin: int
+    password: str
     enabled: int
 
     class Config:
         orm_mode = True
+
+
+class User_Schema(BaseModel):
+    username : str
+    password : str
+ 
+
+    
+    class Config:
+        orm_mode = True
+        validate_assignment = True

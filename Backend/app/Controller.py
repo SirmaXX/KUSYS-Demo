@@ -3,6 +3,17 @@ from . import models, schemas
 
 
 #USERS
+
+
+def checkuser(db: Session, user: schemas.UserCreate):
+    user= db.query(models.User).filter(models.User.username == user.username).first()
+    if user:
+        return True
+    else:
+        return False
+    
+
+    
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(**user.dict())
     db.add(db_user)

@@ -10,7 +10,7 @@ from app.Controller.User_Controller import UserController
 # Dependency
 
 user_router = APIRouter(responses={404: {"description": "Not found"}})
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 def get_db():
     db = SessionLocal()

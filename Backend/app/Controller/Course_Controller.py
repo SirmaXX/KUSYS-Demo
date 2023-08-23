@@ -25,3 +25,10 @@ class CourseController:
         db.refresh(db_course)
         return db_course
     return None
+ def delete_course(db: Session, course_id: int):
+    db_course = db.query(models.Course).filter(models.Course.CourseId == course_id).first()
+    if db_course:
+        db.delete(db_course)
+        db.commit()
+        return db_course
+    return None

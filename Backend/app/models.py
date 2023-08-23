@@ -51,21 +51,13 @@ class User(Base):
     admin = Column(Integer, default=0) # 0 not admin, 1 admin
     enabled = Column(Integer, default=1) # 0 not enabled, 1 enabled
 
+    enrollments = relationship("Enrollment", back_populates="user")
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
 
 
-class Student(Base):
-    __tablename__ = "students"
 
-    StudentId = Column(Integer, primary_key=True, index=True)
-    FirstName = Column(String)
-    LastName = Column(String)
-    BirthDate = Column(Date)
-
-    # Establish the relationship with the Enrollment table
-    enrollments = relationship("Enrollment", back_populates="student")
 
 class Course(Base):
     __tablename__ = "courses"
@@ -80,14 +72,15 @@ class Enrollment(Base):
     __tablename__ = "enrollments"
 
     EnrollmentId = Column(Integer, primary_key=True, index=True)
-    StudentId = Column(Integer, ForeignKey("students.StudentId"))
+    StudentId = Column(Integer, ForeignKey("users.id"))
     CourseId = Column(Integer, ForeignKey("courses.CourseId"))
 
     # Establish bidirectional relationships with Student and Course
-    student = relationship("Student", back_populates="enrollments")
+    user = relationship("User", back_populates="enrollments")
     course = relationship("Course", back_populates="enrollments")
 
 
 
 Base.metadata.create_all(bind=engine)
+
 session.commit()

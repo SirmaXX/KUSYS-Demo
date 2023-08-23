@@ -1,43 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Login() {
-  const [message, setMessage] = useState('');
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
 
-  useEffect(() => {
-    fetch('http://localhost:8000/')
-      .then(response => response.json())
-      .then(data => setMessage(data.message))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/login', {
+        username: username,
+        password: password,
+      });
+      
+      if (response.data === true) {
+        // Successful login logic, e.g., redirect to a dashboard
+        console.log('Login successful');
+      } else {
+        setLoginError('Invalid username or password');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setLoginError('An error occurred during login');
+    }
+  };
 
   return (
-    <center>
-<div class="form-signin w-100 m-auto">
-  <form>
-    <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"/>
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <div>
+      <h2>Login Page</h2>
 
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
-      <label for="floatingInput">Email address</label>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
+      {loginError && <p>{loginError}</p>}
+     
     </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password"/>
-      <label for="floatingPassword">Password</label>
-    </div>
-
-    <div class="form-check text-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"/>
-      <label class="form-check-label" for="flexCheckDefault">
-        Remember me
-      </label>
-    </div>
-    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
-  </form>
-</div>
-    </center>
   );
-}
+};
 
 export default Login;

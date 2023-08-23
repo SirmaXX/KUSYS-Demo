@@ -4,19 +4,6 @@ from typing import List
 from typing import Optional
 
 
-class StudentBase(BaseModel):
-    FirstName: str
-    LastName: str
-    BirthDate: date
-
-class StudentCreate(StudentBase):
-    pass
-
-class Student(StudentBase):
-    StudentId: int
-
-    class Config:
-        orm_mode = True
 
 class CourseBase(BaseModel):
     CourseName: str

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import '../signin.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,24 +26,45 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div class="d-flex align-items-center py-4 bg-body-tertiary">
+      <div class="form-signin w-100 m-auto">
       <h2>Login Page</h2>
 
-      <input
+    
+        
+        <img class="mb-4 float-center" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"/>
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    
+        <div class="form-floating">
+        <input  class="form-control"
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <input
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+        <input  class="form-control"
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button>
+        
+        </div>
+    
+        
+        <button class="btn btn-primary w-100 py-2" onClick={handleLogin} type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
+
+   
+
+
       {loginError && <p>{loginError}</p>}
      
+
+      </div>
     </div>
   );
 };

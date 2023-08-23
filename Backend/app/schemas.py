@@ -15,7 +15,7 @@ class Course(CourseBase):
     CourseId: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class EnrollmentBase(BaseModel):
     StudentId: int
@@ -28,12 +28,13 @@ class Enrollment(EnrollmentBase):
     EnrollmentId: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserBase(BaseModel):
     username: str
-    email: str
+    email: Optional[str] 
+    
 
 class UserCreate(UserBase):
     password: str
@@ -45,7 +46,7 @@ class User(UserBase):
     enabled: int
 
     class Config:
-        orm_mode = True
+        from_attributes= True
 
 
 class User_Schema(BaseModel):
@@ -55,5 +56,5 @@ class User_Schema(BaseModel):
 
     
     class Config:
-        orm_mode = True
+        from_attributes = True
         validate_assignment = True

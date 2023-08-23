@@ -1,20 +1,32 @@
 from sqlalchemy.orm import Session
 from .. import models, schemas
-
-
+import hashlib
 #USERS
+def hash_password(password):
+    # Hash the password using SHA-256
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return hashed_password
+
+def verify_password(input_password, hashed_password):
+    # Hash the input password and compare it with the stored hashed password
+    return hashlib.sha256(input_password.encode()).hexdigest() == hashed_password
+
 
 class UserController:
-  def checkuser(db: Session, user: schemas.UserCreate):
-    user= db.query(models.User).filter(models.User.username == user.username).first()
-    if user:
-        return True
-    else:
-        return False
-    
+  def checkuser(db: Session, user: schemas.User_Schema):
+        db_user = db.query(models.User).filter(models.User.username == user.username).first()
+        if db_user:
+            result = verify_password(user.password, db_user.password)
+            if result:
+                return True
+            else:
+                return False
+        else:
+            return False
 
   def create_user(db: Session, user: schemas.UserCreate):
-    db_user = models.User(**user.dict())
+    hashed_password = hash_password(user.password)
+    db_user = models.User(username=user.username, password=hashed_password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

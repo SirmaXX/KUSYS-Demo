@@ -1,11 +1,11 @@
 
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
 
-import About from './components/AboutPage';
+
 import Home from './components/HomePage';
 import Deneme from './components/Deneme';
 import Login from './components/Login';
-
+import Signup from './components/Signup';
 
 function App() {
  
@@ -14,9 +14,11 @@ function App() {
 
         {/* 👇️ Wrap your Route components in a Routes component */}
         <Routes>
-          <Route path="/about" element={<About />} />
+          
           <Route path="/deneme" element={<Deneme />} />
           <Route path="/login" element={<Login />} />
+
+          <Route path="/signup" element={<Signup />} />
           {/* 👇️ handle dynamic path */}
         
           <Route path="/" element={<Home />} />

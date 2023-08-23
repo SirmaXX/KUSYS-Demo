@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../signin.css';
-const Login = () => {
+const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
+  const [email, setEmail] = useState('');
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [signupError, setSignupError] = useState('');
 
-  const handleLogin = async () => {
+
+  const handleSignup = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/login', {
+      const response = await axios.post('http://localhost:8000/users/', {
         username: username,
+        email: email,
         password: password,
       });
       
-      if (response.data === true) {
-        // Successful login logic, e.g., redirect to a dashboard
-        console.log('Login successful');
+      if (response.status === 201) {
+        setSignupSuccess(true);
       } else {
-        setLoginError('Invalid username or password');
+        setSignupError('An error occurred during signup');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -43,6 +46,13 @@ const Login = () => {
         onChange={(e) => setUsername(e.target.value)}
       />
           <label for="floatingInput">Username</label>
+          <input  class="form-control"
+        type="email"
+        placeholder="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+          <label for="floatingInput">Username</label>
         </div>
         <div class="form-floating">
         <input  class="form-control"
@@ -55,13 +65,14 @@ const Login = () => {
         </div>
     
         
-        <button class="btn btn-primary w-100 py-2" onClick={handleLogin} type="submit">Sign in</button>
+        <button class="btn btn-primary w-100 py-2" onClick={handleSignup} type="submit">Signup</button>
         <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
 
    
 
 
-      {loginError && <p>{loginError}</p>}
+        {signupSuccess && <p>Signup successful!</p>}
+        {signupError && <p>{signupError}</p>}
      
 
       </div>
@@ -69,4 +80,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

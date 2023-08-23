@@ -40,11 +40,8 @@ class UserCreate(UserBase):
     password: str
 
 class User(UserBase):
-    id:int
-    admin: int
     password: str
-    enabled: int
-
+    
     class Config:
         from_attributes= True
 
@@ -52,7 +49,7 @@ class User(UserBase):
 class User_Schema(BaseModel):
     username : str
     password : str
- 
+    email: Optional[str] 
 
     
     class Config:

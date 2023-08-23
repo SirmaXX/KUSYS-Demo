@@ -26,7 +26,7 @@ class UserController:
 
   def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = hash_password(user.password)
-    db_user = models.User(username=user.username, password=hashed_password)
+    db_user = models.User(username=user.username, password=hashed_password,email=user.email, admin=0,enabled=1)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends, Request, HTTPException
+from fastapi import APIRouter,Depends, Request, HTTPException,status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
@@ -26,7 +26,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 
-@course_router.post("/courses/", response_model=Course)
+@course_router.post("/courses/", response_model=Course,status_code=status.HTTP_201_CREATED)
 def create_course_route(course: CourseCreate, db: Session = Depends(get_db)):
     return CourseController.create_course(db, course)
 
@@ -42,7 +42,7 @@ def read_courses(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
 def update_course_route(course_id: int, course: CourseCreate, db: Session = Depends(get_db)):
     return CourseController.update_course(db, course_id, course)
 
-@course_router.delete("/courses/{course_id}", response_model=Course)
+@course_router.delete("/courses/{course_id}", response_model=Course,status_code=status.HTTP_201_CREATED)
 def delete_course_route(course_id: int, db: Session = Depends(get_db)):
     return CourseController.delete_course(db, course_id)
 

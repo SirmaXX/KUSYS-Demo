@@ -56,10 +56,9 @@ class UserController:
 
   def delete_user(db: Session, user_id: int):
     user = db.query(models.User).filter(models.User.id == user_id).first()
-    if  user != None:
-      db.delete( user)
-      db.commit()
-      db.refresh( user )
-      return {}
-    else :
-        return {}
+    if user:
+        db.delete(user)
+        db.commit()
+        return user
+    else:
+        return None

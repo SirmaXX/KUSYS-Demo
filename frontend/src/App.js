@@ -7,7 +7,7 @@ import Deneme from './components/Deneme';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdminCourse from './admin/AdminCourse';
-
+import AdminUser from './admin/AdminUsers';
 
 function App() {
  
@@ -19,7 +19,8 @@ function App() {
           
           <Route path="/deneme" element={<Deneme />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin/course" element={<AdminCourse/>} />
+          <Route path="/admin/courses" element={<AdminCourse/>} />
+          <Route path="/admin/users" element={<AdminUser />} />
           <Route path="/signup" element={<Signup />} />
           {/* 👇️ handle dynamic path */}
         

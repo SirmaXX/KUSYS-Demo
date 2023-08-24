@@ -32,6 +32,7 @@ class Enrollment(EnrollmentBase):
 
 
 class UserBase(BaseModel):
+    id:Optional[int]
     username: str
     email: Optional[str] 
     

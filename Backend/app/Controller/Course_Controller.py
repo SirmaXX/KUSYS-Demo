@@ -31,4 +31,6 @@ class CourseController:
         db.delete(db_course)
         db.commit()
         return db_course
-    return None
+    else :
+       return None
+ 

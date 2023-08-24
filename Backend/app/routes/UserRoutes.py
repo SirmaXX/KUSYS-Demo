@@ -79,7 +79,7 @@ def update_existing_user(user_id: int, user_update: User, db: Session = Depends(
 
 
 
-@user_router.delete("/users/{user_id}", response_model=User)
+@user_router.delete("/users/{user_id}", response_model=User, status_code=status.HTTP_201_CREATED)
 def delete_existing_user(user_id: int, db: Session = Depends(get_db)):
     user = UserController.delete_user(db, user_id)
     if user is None:

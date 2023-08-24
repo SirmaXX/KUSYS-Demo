@@ -26,14 +26,14 @@ const Home= () => {
         <div class="h-100 p-5 text-bg-dark rounded-3">
           <h2>Signup the courses</h2>
           <p>After you become a member, you can start courses</p>
-          <button class="btn btn-outline-light" type="button"><a href='/signup'>Sign up</a></button>
+          <button class="btn btn-outline-light text-white" type="button"><a className='text-white text-decoration-none' href='/signup'>Sign up</a></button>
         </div>
       </div>
       <div class="col-md-6">
         <div class="h-100 p-5 bg-body-tertiary border rounded-3">
           <h2>Start to courses</h2>
           <p>You can apply courses without payment and you can get a certificate</p>
-          <button class="btn btn-outline-secondary" type="button"><a href='/login'>Login</a></button>
+          <button class="btn btn-outline-secondary text-white" type="button"><a className='text-black text-decoration-none' href='/login'>Login</a></button>
         </div>
       </div>
     </div>

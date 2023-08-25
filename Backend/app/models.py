@@ -80,7 +80,9 @@ class Enrollment(Base):
     course = relationship("Course", back_populates="enrollments")
 
 
-db_reset()
+
+
+
 Base.metadata.create_all(bind=engine)
 
 session.commit()

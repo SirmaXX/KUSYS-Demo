@@ -56,3 +56,14 @@ class User_Schema(BaseModel):
     class Config:
         from_attributes = True
         validate_assignment = True
+
+
+class User_Login(BaseModel):
+    username : str
+    password : str
+    
+
+    
+    class Config:
+        from_attributes = True
+        validate_assignment = True

@@ -16,7 +16,7 @@ const Home= () => {
     <div class="p-5 mb-4 bg-body-tertiary rounded-3">
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">KUSYS DEMO APPLİCATİON </h1>
-        <p class="col-md-8 fs-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+        <p class="col-md-10 fs-4">You can reach source codes from this link:<a href='https://github.com/SirmaXX/KUSYS-Demo'>https://github.com/SirmaXX/KUSYS-Demo</a></p>
        
       </div>
     </div>
@@ -39,7 +39,7 @@ const Home= () => {
     </div>
 
     <footer class="pt-3 mt-4 text-body-secondary border-top">
-      &copy; 2023 KYSDEMO
+      &copy; 2023 KUSYSDEMO PROJECT
     </footer>
   </div>
 

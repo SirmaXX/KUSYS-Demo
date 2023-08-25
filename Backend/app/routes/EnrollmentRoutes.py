@@ -33,6 +33,16 @@ def read_enrollment(enrollment_id: int, db: Session = Depends(get_db)):
 def read_enrollments(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return EnrollmentController.get_enrollments(db, skip=skip, limit=limit)
 
+
+
+@enrollment_router.get("/enrollments/courses/{course_id}")
+def read_classenrollment(course_id: int, db: Session = Depends(get_db)):
+    return EnrollmentController.get_classenrollments(db, course_id)
+
+@enrollment_router.get("/enrollments/student/{student_id}")
+def read_classenrollment(student_id: int, db: Session = Depends(get_db)):
+    return EnrollmentController.get_user_enrollments(db, student_id)
+
 @enrollment_router.put("/enrollments/{enrollment_id}", response_model=Enrollment)
 def update_enrollment_route(enrollment_id: int, enrollment: EnrollmentCreate, db: Session = Depends(get_db)):
     return EnrollmentController.update_enrollment(db, enrollment_id, enrollment)

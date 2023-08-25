@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import AdminNavbar  from "./AdminComponents.js";
 
 
 
@@ -243,6 +243,8 @@ const ListUser = () => {
 
 const AdminUser = () => {
     return (
+        <>
+        <AdminNavbar/>
         <div className="container bg-light">
             <h1 className="text-center">Users Panel</h1>
             <div className="row">
@@ -258,7 +260,7 @@ const AdminUser = () => {
             </div>
         </div>
 
-
+        </>
     );
 };
 

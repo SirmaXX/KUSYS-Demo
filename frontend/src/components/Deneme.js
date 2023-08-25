@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 function Deneme() {
   const [message, setMessage] = useState('');
 
@@ -17,5 +19,9 @@ function Deneme() {
     </div>
   );
 }
+
+
+
+
 
 export default Deneme;

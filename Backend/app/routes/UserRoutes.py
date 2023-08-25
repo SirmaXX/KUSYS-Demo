@@ -2,12 +2,12 @@ from fastapi import APIRouter,Depends, Request, HTTPException,status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-
-
 from app.models import SessionLocal,User
-from app.schemas import User,User_Schema
+from app.schemas import User,User_Schema,User_Login
 from app.Controller.User_Controller import UserController
+
 # Dependency
+
 
 user_router = APIRouter(responses={404: {"description": "Not found"}})
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -48,13 +48,26 @@ async def api_index():
 
 
 @user_router.post("/login", description="Function to check user information")
-def login(user_check: User_Schema, db: Session = Depends(get_db)):
+def login(user_check: User_Login, db: Session = Depends(get_db)):
          return UserController.checkuser(db, user_check)
-  
+
+@user_router.post("/adminlogin", description="Function to check user information")
+def login(user_check: User_Login, db: Session = Depends(get_db)):
+         return UserController.checkadmin(db, user_check)
+
 
 @user_router.post("/users/", response_model=User, status_code=status.HTTP_201_CREATED)
 def create_new_user(user_create: User, db: Session = Depends(get_db)):
     return UserController.create_user(db, user_create)
+
+
+
+
+@user_router.post("/admin/users/", response_model=User, status_code=status.HTTP_201_CREATED)
+def create_new_user(user_create: User, db: Session = Depends(get_db)):
+    return UserController.create_admin(db, user_create)
+
+
 
 
 @user_router.get("/users/{user_id}", response_model=User)

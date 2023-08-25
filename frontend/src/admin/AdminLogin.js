@@ -4,8 +4,8 @@ import axios from 'axios';
 import '../signin.css';
 
 import {useNavigate} from "react-router-dom";
-import {setToken, fetchToken} from './Auth.js'
-const Login = () => {
+import {setToken, fetchToken} from '../components/Auth'
+const AdminLogin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/login', {
+      const response = await axios.post('http://localhost:8000/adminlogin', {
         username: username,
         password: password,
       });
@@ -32,13 +32,13 @@ const Login = () => {
           localStorage.setItem('email', userData.email);
           localStorage.setItem('userId', userData.id);
           // Redirect to the profile page
-          navigate("/profile");
+          navigate("/admin/courses");
         } catch (error) {
           console.error('User details fetch error:', error);
           setLoginError('An error occurred during login');
         }
       
-        navigate("/profile");
+        navigate("/admin/profile");
       } else {
         setLoginError('Invalid username or password');
       }
@@ -51,7 +51,7 @@ const Login = () => {
   return (
     <div class="d-flex align-items-center py-4 bg-body-tertiary">
       <div class="form-signin w-100 m-auto">
-      <h2>Login Page</h2>
+      <h2>Admin Login Page</h2>
 
     
         
@@ -93,4 +93,4 @@ const Login = () => {
 };
 
 
-export default Login;
+export default AdminLogin;

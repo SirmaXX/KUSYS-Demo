@@ -1,6 +1,14 @@
 from sqlalchemy.orm import Session
 from .. import models, schemas
 import hashlib
+import jwt
+from fastapi.encoders import jsonable_encoder
+
+SECRET_KEY = "secrettoken"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 800
+
+
 #USERS
 def hash_password(password):
     # Hash the password using SHA-256
@@ -15,10 +23,26 @@ def verify_password(input_password, hashed_password):
 class UserController:
   def checkuser(db: Session, user: schemas.User_Schema):
         db_user = db.query(models.User).filter(models.User.username == user.username).first()
+        data = jsonable_encoder(user)
         if db_user:
             result = verify_password(user.password, db_user.password)
             if result:
-                return True
+                encoded_jwt = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
+                return {"user_id": db_user.id,"token":encoded_jwt,"message":True}
+            else:
+                return False
+        else:
+            return False
+
+        
+  def checkadmin(db: Session, user: schemas.User_Login):
+        db_user = db.query(models.User).filter(models.User.username == user.username,models.User.admin == 1).first()
+        data = jsonable_encoder(user)
+        if db_user:
+            result = verify_password(user.password, db_user.password)
+            if result:
+                encoded_jwt = jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
+                return {"user_id": db_user.id,"token":encoded_jwt,"message":True}
             else:
                 return False
         else:
@@ -27,6 +51,16 @@ class UserController:
   def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = hash_password(user.password)
     db_user = models.User(username=user.username, password=hashed_password,email=user.email, admin=0,enabled=1)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
+
+  def create_admin(db: Session, user: schemas.UserCreate):
+    hashed_password = hash_password(user.password)
+    db_user = models.User(username=user.username, password=hashed_password,email=user.email,admin=1, enabled=1)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import AdminNavbar  from "./AdminComponents.js";
 
 
 
@@ -47,7 +47,7 @@ const UpdateCourse = ({ courseId, courseName }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">Edit Course</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" className="close" data-dismiss="myModal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -60,7 +60,7 @@ const UpdateCourse = ({ courseId, courseName }) => {
               />
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-secondary" data-dismiss="myModal">Close</button>
               <button type="button" className="btn btn-primary" onClick={updateCoursee}>Save Changes</button>
             </div>
           </div>
@@ -126,6 +126,76 @@ const CreateCourse = () => {
 };
 
 
+
+
+const ShowStudents = ({ course_id }) => {
+  const [enrollments, setEnrollments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/enrollments/courses/${course_id}`);
+
+        setEnrollments(response.data);
+      } catch (error) {
+        console.error('Error fetching enrollments:', error);
+      }
+    };
+
+    fetchEnrollments();
+  }, [course_id]);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  return (
+    <div>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={openModal}
+      >
+        Show Students
+      </button>
+
+      {showModal && (
+        <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Students Enrolled in Course {course_id}</h5>
+                <button type="button" className="close" onClick={closeModal}>
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <ul>
+                  {enrollments.map(enrollment => (
+                    <li key={enrollment.EnrollmentId}>StudentId: {enrollment.StudentId}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+
+
+
 const ListCourse = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourseName, setSelectedCourseName] = useState(null);
@@ -162,6 +232,7 @@ const ListCourse = () => {
 
 
 
+
   return (
     <div>
       <h2>List of Courses</h2>
@@ -177,7 +248,9 @@ const ListCourse = () => {
           {courses.map((course) => (
             <tr key={course.CourseId}>
               <td>{course.CourseName}</td>
-              <td>{course.CourseId}</td>
+              <td>
+                <ShowStudents course_id={course.CourseId} />
+                </td>
               <td>
                 <button
                   className="btn btn-danger"
@@ -201,13 +274,15 @@ const ListCourse = () => {
 
 const AdminCourse = () => {
   return (
-    <div class="container bg-light">
-      <h1 class="text-center">Course Panel</h1>
-      <div class="row">
-        <div class="col-md-6 col-sm-12 card">
+    <>
+    <AdminNavbar/>
+    <div className="container bg-light">
+      <h1 className="text-center">Course Panel</h1>
+      <div className="row">
+        <div className="col-md-6 col-sm-12 card">
           <CreateCourse />
         </div>
-        <div class="col-md-6 col-sm-12">
+        <div className="col-md-6 col-sm-12">
          
           <ListCourse />
 
@@ -216,7 +291,7 @@ const AdminCourse = () => {
       </div>
     </div>
 
-
+    </>
   );
 };
 

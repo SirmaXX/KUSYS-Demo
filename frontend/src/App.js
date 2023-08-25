@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './components/HomePage';
-import Deneme from './components/Deneme';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdminCourse from './admin/AdminCourse';
@@ -20,7 +19,7 @@ function App() {
 
     <Router>
       <Routes>
-        <Route path="/deneme" element={<Deneme />} />
+       
         <Route path="/login" element={ <Login />} />
         <Route path="/admin/login" element={ <AdminLogin />} />
         <Route path="/admin/profile" element={ <RequireToken><AdminProfile /></RequireToken>} />

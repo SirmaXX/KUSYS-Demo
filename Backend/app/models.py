@@ -80,9 +80,15 @@ class Enrollment(Base):
     course = relationship("Course", back_populates="enrollments")
 
 
-
-
-
+db_reset()
+db=SessionLocal()
+adminadd=User(username="admin",password="admin",email="admin",admin=1,enabled=1)
+useradd=User(username="user",password="user",email="user",admin=0,enabled=1)
+courseadd=Course(CourseName="Python")
+db.add(adminadd)
+db.add(useradd)
+db.add(courseadd)
+db.commit()
 Base.metadata.create_all(bind=engine)
 
 session.commit()

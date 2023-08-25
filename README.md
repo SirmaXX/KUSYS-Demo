@@ -18,7 +18,6 @@ Aşağıdaki komut satırlarını sıra ile yazarak,backend servisi containerın
 
 sudo docker exec -it backend /bin/bash
 
-cd tests
 
 pytest
 
@@ -35,8 +34,8 @@ http://localhost:3000/admin/login  urline tıklayarak
 Username:admin,password:admin olarak yazdığınız vakit admin paneline erişebileceksiniz veya backend servisine ait endpointleri kullanarak admin oluşturabilirsiniz.
 
 ### Kullanıcı paneline erişmek istiyorsanız.
-http://localhost:3000/admin/login  urline tıklayarak
+http://localhost:3000/login  urline tıklayarak
 
-Username:user,password:user olarak yazdığınız vakit kullanarak paneline erişebileceksiniz veya signup üzerinden kayıt olarak kullanıcı paneline erişebilirsiniz.
+Username:string,password:string yazarak veya kayıt olarak yazdığınız vakit kullanarak paneline erişebileceksiniz veya signup üzerinden kayıt olarak kullanıcı paneline erişebilirsiniz.
 
 

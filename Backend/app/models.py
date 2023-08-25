@@ -79,16 +79,17 @@ class Enrollment(Base):
     user = relationship("User", back_populates="enrollments")
     course = relationship("Course", back_populates="enrollments")
 
+#TEST İÇİN OLUŞTURULAN DEFAULT KULLANICI VE KURSLAR
 
 db_reset()
-db=SessionLocal()
-adminadd=User(username="admin",password="admin",email="admin",admin=1,enabled=1)
-useradd=User(username="user",password="user",email="user",admin=0,enabled=1)
-courseadd=Course(CourseName="Python")
-db.add(adminadd)
-db.add(useradd)
-db.add(courseadd)
-db.commit()
 Base.metadata.create_all(bind=engine)
+
+adminadd=User(id=1,username="admin",password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",email="admin",admin=1,enabled=1)
+useradd=User(id=2,username="string",password="473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8",email="string",admin=0,enabled=1)
+courseadd=Course(CourseId = 1,CourseName="Python")
+session.add(adminadd)
+session.add(useradd)
+session.add(courseadd)
+
 
 session.commit()

@@ -26,23 +26,23 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 
-@course_router.post("/courses/", response_model=Course,status_code=status.HTTP_201_CREATED)
+@course_router.post("/courses/", response_model=Course,status_code=status.HTTP_201_CREATED,description="Kurs oluşturmak için oluşturulan endpoint")
 def create_course_route(course: CourseCreate, db: Session = Depends(get_db)):
     return CourseController.create_course(db, course)
 
-@course_router.get("/courses/{course_id}", response_model=Course)
+@course_router.get("/courses/{course_id}", response_model=Course,description="herhangi bir idye sahip kursun bilgilerini getirmek için oluşturulan endpoint")
 def read_course(course_id: int, db: Session = Depends(get_db)):
     return CourseController.get_course(db, course_id)
 
-@course_router.get("/courses/", response_model=list[Course])
+@course_router.get("/courses/", response_model=list[Course],description="ilk 10 Kursun listesini getirmek için oluşturulan endpoint")
 def read_courses(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return CourseController.get_courses(db, skip=skip, limit=limit)
 
-@course_router.put("/courses/{course_id}", response_model=Course)
+@course_router.put("/courses/{course_id}", response_model=Course,description=" Kursun bilgilerini güncellemek için oluşturulan endpoint")
 def update_course_route(course_id: int, course: CourseCreate, db: Session = Depends(get_db)):
     return CourseController.update_course(db, course_id, course)
 
-@course_router.delete("/courses/{course_id}", response_model=Course,status_code=status.HTTP_201_CREATED)
+@course_router.delete("/courses/{course_id}", response_model=Course,status_code=status.HTTP_201_CREATED ,description="Kursu silmek için oluşturulan endpoint")
 def delete_course_route(course_id: int, db: Session = Depends(get_db)):
     return CourseController.delete_course(db, course_id)
 
